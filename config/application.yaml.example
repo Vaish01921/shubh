@@ -1,0 +1,40 @@
+# Copy to application.yaml and adjust as needed.
+# See CONFIG_SPEC.md for full specification.
+
+base_url: "https://www.eye2serve.com:9001/sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchpad.html"
+ship_from_plant: "TANDA CEMENT WORKS"
+bid_discount_percent: 2
+search_retry_interval_seconds: 10
+timer_poll_interval_seconds: 0.1
+page_load_timeout_seconds: 30
+element_wait_timeout_seconds: 10
+post_login_wait_seconds: 6
+
+parallel:
+  max_workers: 4
+  shutdown_timeout_seconds: 90
+
+browser:
+  headless: false
+  binary_path: "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe"
+  window_size: "1920,1080"
+
+# Tonnage-wise excluded SPI (global; exact case-sensitive match at plan time per leg).
+excluded_spi_by_tonnage:
+  18: "1153-BAG-AL/REGULAR/DEALER/MCV1"
+  25: "1154-BAG-AL/REGULAR/DEALER/MCV2"
+  30: "1157-BAG-AL/REGULAR/DEALER/MCV3"
+  32: "1156-BAG-AL/REGULAR/DEALER/HCV2"
+  35: "1156-BAG-AL/REGULAR/DEALER/HCV2"
+  41: "1156-BAG-AL/REGULAR/DEALER/HCV2"
+
+quantity_tolerance: 0.01
+
+table:
+  cell_indices:
+    club_id: 2
+    destination: 5
+    quantity: 11
+    spi: 12
+    base_price: 13
+    company: 20

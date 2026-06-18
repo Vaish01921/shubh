@@ -1,0 +1,22 @@
+# Unified Backend Automation — Dependencies
+# See ARCHITECTURE.md and MIGRATION_ROADMAP.md
+#
+# Installed on clone: pip install -r requirements.txt
+# Run API: uvicorn backend_server:app --host 127.0.0.1 --port 8000
+#   or: python backend_server.py
+
+# --- Original automation stack (unchanged) ---
+selenium>=4.21.0
+webdriver-manager>=4.0.0
+beautifulsoup4>=4.12.0
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# --- HTTP API (backend_server.py) ---
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.0.0
+python-multipart>=0.0.9
+
+# --- Browser driver (src/driver_factory.py) ---
+undetected-chromedriver>=3.5.5

@@ -1,0 +1,142 @@
+# Unified Backend Automation — Application configuration
+# Linux Production Configuration
+
+# -------------------------------------------------
+# Logging — dual file routing (execution phase vs general)
+# -------------------------------------------------
+# execution_phase_file: valid bid found → timer → fill → Save/Yes/OK → rank → post-exec
+# general_log_file: all other logs (login, monitor, parse, API, etc.)
+# Set general_log_file_enabled: false to stop saving non-execution logs to disk.
+logging:
+  execution_phase_file_enabled: true
+  execution_phase_dir: "logs/execution_phase"
+  general_log_file_enabled: false
+  general_log_dir: "logs/general"
+  general_console_enabled: true
+
+# -------------------------------------------------
+# SAP Configuration
+# -------------------------------------------------
+sap:
+  base_url: "https://www.eye2serve.com:9001/sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchpad.html?saml2=disabled"
+  launchpad_url: "https://www.eye2serve.com:9001/sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchpad.html"
+  # Vendor app (same view as Shubh Carrier after tile click)
+  bidding_url: "https://www.eye2serve.com:9001/sap/bc/ui5_ui5/sap/zvc_vendor_app/index.html#/ebidding"
+  # Default depots for sequential multi-depot processing (API can override)
+  depots: []
+  # Open E-Bidding by clicking launchpad tile (opens new tab); if false, navigate to bidding_url
+  open_via_tile: true
+  e_bidding_tile_id: "__content8"
+  ship_from_plant: "TANDA CEMENT WORKS"
+  bid_discount_percent: 2
+  # Header "Show Search" (upper-right): set header_show_search_button_id if you have its ID from devtools
+  header_show_search_button_id: null
+  # Go/initial button (after expanding Show Search) — often same as __button0
+  initial_search_button_id: "__button0-BDI-content"
+  ship_from_plant_field_id: "__xmlview0--ididUtclVCShipFromPlant-inner"
+  depot_field_id: "__xmlview0--idUtclVCDepot-inner"
+  search_button_id: "__button3-BDI-content"
+  # Order List results table (optional; used after Search is clicked)
+  results_table_id: "__xmlview0--idUtclVCVendorAssignmentTable-tblBody"
+  # SPI column (same row_index as bid amount): full inner id template, OR token that replaces idBidAmount in bid id
+  spi_inner_element_id_template: null
+  spi_inner_id_replace_bid_control_token: null
+  # If true, click search again after timer to refresh table before submitting bids
+  click_search_after_timer: false
+
+# -------------------------------------------------
+# Live bid monitoring (sequential per depot)
+# -------------------------------------------------
+# Total time (seconds) to keep re-searching per depot when no rows are found.
+# Set 0 (or negative) for continuous monitoring without timeout.
+live_monitor_total_seconds: 0
+# Delay (seconds) between searches during monitoring
+live_monitor_poll_seconds: 4
+
+# -------------------------------------------------
+# Retry & Timer Settings
+# -------------------------------------------------
+# Delay between attempts in _run_search_with_retry only (not the live monitor 4s cadence).
+search_retry_interval_seconds: 10
+# Shubh parity: timer trigger strings are hardcoded in depot_bidding_engine._is_execute_timer_text
+# (Starts in 0:0:3|2|1|0 OR substring "Expires in"). Poll interval for that loop only:
+timer_poll_interval_seconds: 0.1
+timer_element_id: "__xmlview0--timer-inner"
+
+# -------------------------------------------------
+# Timeout Configuration
+# -------------------------------------------------
+page_load_timeout_seconds: 60
+element_wait_timeout_seconds: 20
+post_login_wait_seconds: 8
+implicit_wait_seconds: 10
+
+# -------------------------------------------------
+# Parallel Execution
+# -------------------------------------------------
+parallel:
+  max_workers: 4
+  shutdown_timeout_seconds: 90
+
+# -------------------------------------------------
+# Automation orchestration
+# -------------------------------------------------
+# legacy = one WebDriver + process_parallel_tabs (cooperative tabs)
+# multiprocess = ProcessPoolExecutor + run_depot_worker (one OS process + Chrome per depot)
+# Override: AUTOMATION_EXECUTION_MODE=legacy|multiprocess
+automation:
+  execution_mode: multiprocess
+  multiprocess:
+    max_parallel_workers: null
+    max_parallel_workers_absolute_cap: 16
+    # Depots start in batches of 2 in parallel_orchestrator; 0.5s between batches (no per-worker stagger).
+    worker_retry_attempts: 2
+    depot_timeout_seconds: null
+    # After depot automation: keep Chrome + SAP session (no driver.quit). Set false to close browser after each depot (legacy).
+    keep_browser_open: true
+    # If true, keep browser open only when automation_executed (bid submit ran); else same as keep_browser_open for any successful depot run
+    keep_browser_open_only_after_automation: false
+    # passive = heartbeat only; monitor = read-only timer text (no bids / no search)
+    post_execute_mode: passive
+    post_execute_interval_seconds: 5
+    # null = run until process is stopped (or orchestrator timeout kills worker)
+    post_execute_max_seconds: null
+
+# -------------------------------------------------
+# Browser Configuration (Chrome)
+# -------------------------------------------------
+browser:
+  type: chrome
+  headless: false
+  binary_path: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  window_size: "1920,1080"
+  remote_debugging_port: 9222
+  proxy: null                     # example: "http://username:password@proxy_ip:port"
+  chromedriver_path: null
+  chromedriver_create_retries: 6
+  chromedriver_retry_base_delay_seconds: 2.0
+
+# -------------------------------------------------
+# Business Rules — tonnage-wise excluded SPI (global; exact case-sensitive match at plan time)
+# -------------------------------------------------
+excluded_spi_by_tonnage:
+  18: "1153-BAG-AL/REGULAR/DEALER/MCV1"
+  25: "1154-BAG-AL/REGULAR/DEALER/MCV2"
+  30: "1157-BAG-AL/REGULAR/DEALER/MCV3"
+  32: "1156-BAG-AL/REGULAR/DEALER/HCV2"
+  35: "1156-BAG-AL/REGULAR/DEALER/HCV2"
+  41: "1156-BAG-AL/REGULAR/DEALER/HCV2"
+
+quantity_tolerance: 0.01
+
+# -------------------------------------------------
+# SAP Table Mapping
+# -------------------------------------------------
+table:
+  cell_indices:
+    club_id: 2
+    destination: 5
+    quantity: 11
+    spi: 12
+    base_price: 13
+    company: 20
