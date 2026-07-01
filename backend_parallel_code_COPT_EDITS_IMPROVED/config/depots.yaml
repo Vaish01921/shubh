@@ -1,0 +1,90 @@
+# Unified Backend Automation — Depot definitions and destinations
+# See CONFIG_SPEC.md for full specification.
+
+depots:
+  AYODHYA:
+    destinations:
+      - AYODHYA
+      - SALARPUR (FZB)
+      - DYORHI BAZAR
+      - KHAJURAHAT
+      - KUMARGANJ
+      - MASAUDHA
+      - KUCHERA BAZAR
+      - RUDAULI
+      - SOHAWAL
+      - POORA BAZAR
+      - MILKIPUR (FZB)
+      - MAWAI
+      - RAJE SULTANPUR (AMB)
+      - RUDAULI-DUMP
+      - BEEKAPUR
+      - RANIMAU (FZBD)
+      - BHETE
+      - DEORIA BAZAR
+      - JAHANGIR GANJ
+      - AKBARPUR (ABD)
+      - MAHRUWA
+      - MALIPUR (AMD NAGAR)
+      - RAMGARH (AMD NAGAR)
+      - BASKARI
+      - Jalalpur
+      - NEORA
+      - BANDIPUR
+      - RAFIGANJ
+      - CHATURI PATTI
+      - RAMNAGAR MAHUWARE
+      - RAMPUR SARKARWAL
+      - MAYA BAZAR
+      - CHAURE BAZAR
+      - KHANDASA
+      - BELSAR
+      - FAIZABAD-1-DUMP
+
+  GONDA:
+    destinations:
+      - KAISAR GANJ
+      - DHANEPUR
+      - GONDA
+      - WAZIR GANJ
+      - DOMARIYAGANJ (DMRGJ)
+      - KHARGUPUR IMILIA
+      - TARABGANJ
+      - COLONEL GANJ
+      - BALAPUR
+      - HUSAINABAD GRINT
+      - SONOLI MOHAMMADPUR
+
+  SITAPUR:
+    destinations:
+      - SITAPUR
+      - LAKHIMPUR
+      - LODHAURI
+      - KHAMARIA PANDIT
+      - MOHAMMADI
+      - MAHOLI (MISRIKK)
+      - GOLA GOKARANNATH
+      - RAMIA BEAHAR
+      - MAILANI
+      - PALIYA KALAN
+      - AJAYPUR
+      - MITAULI
+      - KASTA
+
+  LUCKNOW:
+    destinations: []   # Quantity-only mode
+
+  HARDOI:
+    destinations: []   # Quantity-only mode
+
+  GORAKHPUR:
+    destinations: []   # Quantity-only mode
+
+  MAU:
+    destinations: []   # Quantity-only mode
+
+  DEORIA:
+    destinations: []   # Quantity-only mode
+
+  BASTI:
+    destinations: []   # Quantity-only mode

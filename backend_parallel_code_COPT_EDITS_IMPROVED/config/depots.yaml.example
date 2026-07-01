@@ -1,0 +1,43 @@
+# Copy to depots.yaml and adjust destinations as needed.
+# See CONFIG_SPEC.md for full specification.
+
+depots:
+  AYODHYA:
+    destinations:
+      - AYODHYA
+      - SALARPUR (FZB)
+      - DYORHI BAZAR
+      - KHAJURAHAT
+      - KUMARGANJ
+      # ... add full list from CONFIG_SPEC / Shubh Carriers
+
+  GONDA:
+    destinations:
+      - KAISAR GANJ
+      - DHANEPUR
+      - GONDA
+      # ...
+
+  SITAPUR:
+    destinations:
+      - SITAPUR
+      - LAKHIMPUR
+      # ...
+
+  LUCKNOW:
+    destinations: []   # Quantity-only mode
+
+  HARDOI:
+    destinations: []
+
+  GORAKHPUR:
+    destinations: []
+
+  MAU:
+    destinations: []
+
+  DEORIA:
+    destinations: []
+
+  BASTI:
+    destinations: []
